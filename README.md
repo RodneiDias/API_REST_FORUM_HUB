@@ -84,6 +84,7 @@ src/
 │           └── alura/
 │               └── forum/
 │                   ├── controller/
+|                   |   ├── AutenticacaoController
 │                   │   ├── CursoController.java
 │                   │   ├── RespostaController.java
 │                   │   └── TopicoController.java
