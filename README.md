@@ -25,6 +25,36 @@ Ela permite que os usuários façam autenticação, criem cursos, postem tópico
 - SpringBoot 3.3.1
 - MySQL
 - Maven
+
+## Funcionalidades
+### Autenticação e Autorização
+A aplicação utiliza JWT (JSON Web Token) para autenticação e autorização. O token é gerado durante o login e deve ser enviado em todas as requisições subsequentes no cabeçalho Authorization com o prefixo Bearer.
+
+## Roles
+ADMIN: Tem permissão para criar, atualizar e excluir cursos, tópicos e respostas.
+USER: Tem permissão para criar e visualizar tópicos e respostas.
+
+## Endpoints da API
+### CursoController
+- POST /cursos: Cadastrar um novo curso.
+- GET /cursos: Listar todos os cursos.
+- GET /cursos/{idCurso}: Detalhar um curso específico.
+- PUT /cursos/{idCurso}: Atualizar um curso específico.
+- DELETE /cursos/{idCurso}: Excluir um curso específico.
+ 
+### TopicoController
+- POST /cursos/{idCurso}/topicos: Cadastrar um novo tópico em um curso.
+- GET /cursos/{idCurso}/topicos: Listar todos os tópicos de um curso.
+- GET /cursos/{idCurso}/topicos/{idTopico}: Detalhar um tópico específico.
+- PUT /cursos/{idCurso}/topicos/{idTopico}: Atualizar um tópico específico.
+- DELETE /cursos/{idCurso}/topicos/{idTopico}: Excluir um tópico específico.
+
+### RespostaController
+- POST /cursos/{idCurso}/topicos/{idTopico}/respostas: Cadastrar uma nova resposta em um tópico.
+- GET /cursos/{idCurso}/topicos/{idTopico}/respostas: Listar todas as respostas de um tópico.
+- GET /cursos/{idCurso}/topicos/{idTopico}/respostas/{idResposta}: Detalhar uma resposta específica.
+- PUT /cursos/{idCurso}/topicos/{idTopico}/respostas/{idResposta}: Atualizar uma resposta específica.
+- DELETE /cursos/{idCurso}/topicos/{idTopico}/respostas/{idResposta}: Excluir uma resposta específica.
   
 ## Instruções de Configuração
 
@@ -36,10 +66,13 @@ Ela permite que os usuários façam autenticação, criem cursos, postem tópico
     - spring.datasource.username= [seu nome de usuario]
     - spring.datasource.password= [senha do banco de dados]
 4. Crie o banco de dados MySql
-    - CREATE DATABASE forum_hub_api;  
- 
-4. Após a configuração, você pode executar a aplicação executando a classe :
-   - ForumApplication.java.
+    - CREATE DATABASE forum_hub_api;
+5. Após a configuração, você pode executar a aplicação executando a classe :
+   - ForumApplication.java.      
+6. Insira um usuario direto no banco
+   - INSERT INTO usuarios (nome, email, senha) VALUES ('USER_NAME', 'exemplo@exemplo.exemplo', '$2a$10$Y50UaMFOxteibQEYLrwuHeehHYfcoafCopUazP12.rqB41bsolF5.');
+7. Insira o tipo de acesso especificando a role (ROLE_ADMIN ou ROLE_USER)
+   - INSERT INTO user_roles (user_id, role) VALUES (1, 'ROLE_USER'); 
  
 ## Estrutura do Projeto
 ```
@@ -99,37 +132,6 @@ src/
     V7__create-table-role.sql
 
 ```
-### Configuração do Banco de Dados
-
-Certifique-se de que o MySQL esteja instalado e rodando. Crie um banco de dados chamado `forum_hub_api`.
-
-### sql
-CREATE DATABASE forum_hub_api;
-
-## Endpoints da API
-### CursoController
-- POST /cursos: Cadastrar um novo curso.
-- GET /cursos: Listar todos os cursos.
-- GET /cursos/{idCurso}: Detalhar um curso específico.
-- PUT /cursos/{idCurso}: Atualizar um curso específico.
-- DELETE /cursos/{idCurso}: Excluir um curso específico.
- 
-### TopicoController
-- POST /cursos/{idCurso}/topicos: Cadastrar um novo tópico em um curso.
-- GET /cursos/{idCurso}/topicos: Listar todos os tópicos de um curso.
-- GET /cursos/{idCurso}/topicos/{idTopico}: Detalhar um tópico específico.
-- PUT /cursos/{idCurso}/topicos/{idTopico}: Atualizar um tópico específico.
-- DELETE /cursos/{idCurso}/topicos/{idTopico}: Excluir um tópico específico.
-
-### RespostaController
-- POST /cursos/{idCurso}/topicos/{idTopico}/respostas: Cadastrar uma nova resposta em um tópico.
-- GET /cursos/{idCurso}/topicos/{idTopico}/respostas: Listar todas as respostas de um tópico.
-- GET /cursos/{idCurso}/topicos/{idTopico}/respostas/{idResposta}: Detalhar uma resposta específica.
-- PUT /cursos/{idCurso}/topicos/{idTopico}/respostas/{idResposta}: Atualizar uma resposta específica.
-- DELETE /cursos/{idCurso}/topicos/{idTopico}/respostas/{idResposta}: Excluir uma resposta específica.
-
-## Autenticação e Autorização
-A aplicação utiliza JWT (JSON Web Token) para autenticação e autorização. O token é gerado durante o login e deve ser enviado em todas as requisições subsequentes no cabeçalho Authorization com o prefixo Bearer.
 
 ## Documentação da API
 A documentação da API é gerada automaticamente pelo Springdoc OpenAPI e pode ser acessada em:
