@@ -83,43 +83,48 @@ src/
 │       └── com/
 │           └── alura/
 │               └── forum/
-│                   ├── controller/
-|                   |   ├── AutenticacaoController
-│                   │   ├── CursoController.java
-│                   │   ├── RespostaController.java
-│                   │   └── TopicoController.java
-│                   ├── domain/
-│                   │   ├── curso/
-│                   │   │   ├── Curso.java
-│                   │   │   ├── CursoRepository.java
-│                   │   │   ├── DadosAtualizacaoCurso.java
-│                   │   │   ├── DadosCadastroCurso.java
-│                   │   │   ├── DadosDetalhamentoCurso.java
-│                   │   │   └── DadosListagemCurso.java
-│                   │   ├── resposta/
-│                   │   │   ├── DadosAtualizacaoResposta.java
-│                   │   │   ├── DadosCadastroResposta.java
-│                   │   │   ├── DadosDetalhamentoResposta.java
-│                   │   │   ├── DadosListagemResposta.java
-│                   │   │   ├── Resposta.java
-│                   │   │   └── RespostaRepository.java
-│                   │   ├── topico/
-│                   │   │   ├── DadosAtualizacaoTopico.java
-│                   │   │   ├── DadosCadastroTopico.java
-│                   │   │   ├── DadosDetalhamentoTopico.java
-│                   │   │   ├── DadosListagemTopico.java
-│                   │   │   ├── StatusTopico.java
-│                   │   │   ├── Topico.java
-│                   │   │   └── TopicoRepository.java
-│                   │   └── usuario/
-│                   │       ├── DadosAutenticacao.java
-│                   │       ├── Usuario.java
-│                   │       ├── UsuarioRepository.java
-│                   │       └── UsuarioService.java
-│                   └── security/
-│                       ├── SecurityConfiguration.java
-│                       ├── TokenService.java
-│                       └── UsuarioDetailsServiceImpl.java
+│               |   ├── controller/
+|               |   |   ├── AutenticacaoController
+│               |   │   ├── CursoController.java
+│               |   │   ├── RespostaController.java
+│               |   │   └── TopicoController.java
+│               |   ├── domain/
+│               |   │   ├── curso/
+│               |   │   │   ├── Curso.java
+│               |   │   │   ├── CursoRepository.java
+│               |   │   │   ├── DadosAtualizacaoCurso.java
+│               |   │   │   ├── DadosCadastroCurso.java
+│               |   │   │   ├── DadosDetalhamentoCurso.java
+│               |   │   │   └── DadosListagemCurso.java
+│               |   │   ├── resposta/
+│               |   │   │   ├── DadosAtualizacaoResposta.java
+│               |   │   │   ├── DadosCadastroResposta.java
+│               |   │   │   ├── DadosDetalhamentoResposta.java
+│               |   │   │   ├── DadosListagemResposta.java
+│               |   │   │   ├── Resposta.java
+│               |   │   │   └── RespostaRepository.java
+│               |   │   ├── topico/
+│               |   │   │   ├── DadosAtualizacaoTopico.java
+│               |   │   │   ├── DadosCadastroTopico.java
+│               |   │   │   ├── DadosDetalhamentoTopico.java
+│               |   │   │   ├── DadosListagemTopico.java
+│               |   │   │   ├── StatusTopico.java
+│               |   │   │   ├── Topico.java
+│               |   │   │   └── TopicoRepository.java
+│               |   │   └── usuario/
+│               |   │       ├── DadosAutenticacao.java
+│               |   │       ├── Usuario.java
+│               |   │       ├── UsuarioRepository.java
+│               |   │       └── AltenticacaoService.java
+│               |   └── infra
+|               |          ├── security/
+│               |          |   ├── SecurityFilter
+|               |          |   ├── SecurityConfiguration.java
+│               |          |   ├── TokenService.java
+│               |          |   └── DadosTokenJWT
+|               |          └── springdoc
+|               |              └── SpingDocConfigurations   
+|               └──ForumApplication
 └── resources/
 ├── application.properties
 └── db/
