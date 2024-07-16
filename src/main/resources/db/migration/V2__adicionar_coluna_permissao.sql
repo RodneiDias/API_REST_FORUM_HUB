@@ -1,1 +1,0 @@
-ALTER TABLE usuarios ADD COLUMN permissao varchar(100) NOT NULL;
