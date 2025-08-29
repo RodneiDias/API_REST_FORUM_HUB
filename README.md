@@ -25,86 +25,14 @@ Ela permite que os usuários façam autenticação, criem cursos, postem tópico
 - SpringBoot 3.3.1
 - MySQL
 - Maven
-  
-## Instruções de Configuração
 
-1. Clone o repositório para o seu ambiente local.
-   - git clone https://github.com/RodneiDias/API_REST_FORUM_HUB.git
-2. Crie um banco de dados MySQL.   
-3. Configure o arquivo `application.properties` com as informações do seu banco de dados.
-    - spring.datasource.url=jdbc:mysql://localhost:3306/forum_hub_api
-    - spring.datasource.username= [seu nome de usuario]
-    - spring.datasource.password= [senha do banco de dados]
-4. Crie o banco de dados MySql
-    - CREATE DATABASE forum_hub_api;  
- 
-4. Após a configuração, você pode executar a aplicação executando a classe :
-   - ForumApplication.java.
- 
-## Estrutura do Projeto
-```
-src/
-└── main/
-├── java/
-│   └── br/
-│       └── com/
-│           └── alura/
-│               └── forum/
-│                   ├── controller/
-│                   │   ├── CursoController.java
-│                   │   ├── RespostaController.java
-│                   │   └── TopicoController.java
-│                   ├── domain/
-│                   │   ├── curso/
-│                   │   │   ├── Curso.java
-│                   │   │   ├── CursoRepository.java
-│                   │   │   ├── DadosAtualizacaoCurso.java
-│                   │   │   ├── DadosCadastroCurso.java
-│                   │   │   ├── DadosDetalhamentoCurso.java
-│                   │   │   └── DadosListagemCurso.java
-│                   │   ├── resposta/
-│                   │   │   ├── DadosAtualizacaoResposta.java
-│                   │   │   ├── DadosCadastroResposta.java
-│                   │   │   ├── DadosDetalhamentoResposta.java
-│                   │   │   ├── DadosListagemResposta.java
-│                   │   │   ├── Resposta.java
-│                   │   │   └── RespostaRepository.java
-│                   │   ├── topico/
-│                   │   │   ├── DadosAtualizacaoTopico.java
-│                   │   │   ├── DadosCadastroTopico.java
-│                   │   │   ├── DadosDetalhamentoTopico.java
-│                   │   │   ├── DadosListagemTopico.java
-│                   │   │   ├── StatusTopico.java
-│                   │   │   ├── Topico.java
-│                   │   │   └── TopicoRepository.java
-│                   │   └── usuario/
-│                   │       ├── DadosAutenticacao.java
-│                   │       ├── Usuario.java
-│                   │       ├── UsuarioRepository.java
-│                   │       └── UsuarioService.java
-│                   └── security/
-│                       ├── SecurityConfiguration.java
-│                       ├── TokenService.java
-│                       └── UsuarioDetailsServiceImpl.java
-└── resources/
-├── application.properties
-└── db/
-└── migration/
-└── V1__create-table-usuarios.sql
-    V2__adicionar_coluna_permissao.sql
-    V3__create_table_cursos.sql
-    V4__create_table_respostas.sql
-    V5__create-table-topicos.sql
-    V6__remove_column_permissao.sql
-    V7__create-table-role.sql
+## Funcionalidades
+### Autenticação e Autorização
+A aplicação utiliza JWT (JSON Web Token) para autenticação e autorização. O token é gerado durante o login e deve ser enviado em todas as requisições subsequentes no cabeçalho Authorization com o prefixo Bearer.
 
-```
-### Configuração do Banco de Dados
-
-Certifique-se de que o MySQL esteja instalado e rodando. Crie um banco de dados chamado `forum_hub_api`.
-
-### sql
-CREATE DATABASE forum_hub_api;
+## Roles
+ADMIN: Tem permissão para criar, atualizar e excluir cursos, tópicos e respostas.
+USER: Tem permissão para criar e visualizar tópicos e respostas.
 
 ## Endpoints da API
 ### UsuarioController
@@ -134,9 +62,89 @@ CREATE DATABASE forum_hub_api;
 - GET /cursos/{idCurso}/topicos/{idTopico}/respostas/{idResposta}: Detalhar uma resposta específica.
 - PUT /cursos/{idCurso}/topicos/{idTopico}/respostas/{idResposta}: Atualizar uma resposta específica.
 - DELETE /cursos/{idCurso}/topicos/{idTopico}/respostas/{idResposta}: Excluir uma resposta específica.
+  
+## Instruções de Configuração
 
-## Autenticação e Autorização
-A aplicação utiliza JWT (JSON Web Token) para autenticação e autorização. O token é gerado durante o login e deve ser enviado em todas as requisições subsequentes no cabeçalho Authorization com o prefixo Bearer.
+1. Clone o repositório para o seu ambiente local.
+   - git clone https://github.com/RodneiDias/API_REST_FORUM_HUB.git
+2. Crie um banco de dados MySQL.   
+3. Configure o arquivo `application.properties` com as informações do seu banco de dados.
+    - spring.datasource.url=jdbc:mysql://localhost:3306/forum_hub_api
+    - spring.datasource.username= [seu nome de usuario]
+    - spring.datasource.password= [senha do banco de dados]
+4. Crie o banco de dados MySql
+    - CREATE DATABASE forum_hub_api;
+5. Após a configuração, você pode executar a aplicação executando a classe :
+   - ForumApplication.java.      
+6. Insira um usuario direto no banco
+   - INSERT INTO usuarios (nome, email, senha) VALUES ('USER_NAME', 'exemplo@exemplo.exemplo', '$2a$10$Y50UaMFOxteibQEYLrwuHeehHYfcoafCopUazP12.rqB41bsolF5.');
+7. Insira o tipo de acesso especificando a role (ROLE_ADMIN ou ROLE_USER)
+   - INSERT INTO user_roles (user_id, role) VALUES (1, 'ROLE_USER'); 
+ 
+## Estrutura do Projeto
+```
+src/
+└── main/
+├── java/
+│   └── br/
+│       └── com/
+│           └── alura/
+│               └── forum/
+│               |   ├── controller/
+|               |   |   ├── AutenticacaoController
+│               |   │   ├── CursoController.java
+│               |   │   ├── RespostaController.java
+│               |   │   └── TopicoController.java
+│               |   ├── domain/
+│               |   │   ├── curso/
+│               |   │   │   ├── Curso.java
+│               |   │   │   ├── CursoRepository.java
+│               |   │   │   ├── DadosAtualizacaoCurso.java
+│               |   │   │   ├── DadosCadastroCurso.java
+│               |   │   │   ├── DadosDetalhamentoCurso.java
+│               |   │   │   └── DadosListagemCurso.java
+│               |   │   ├── resposta/
+│               |   │   │   ├── DadosAtualizacaoResposta.java
+│               |   │   │   ├── DadosCadastroResposta.java
+│               |   │   │   ├── DadosDetalhamentoResposta.java
+│               |   │   │   ├── DadosListagemResposta.java
+│               |   │   │   ├── Resposta.java
+│               |   │   │   └── RespostaRepository.java
+│               |   │   ├── topico/
+│               |   │   │   ├── DadosAtualizacaoTopico.java
+│               |   │   │   ├── DadosCadastroTopico.java
+│               |   │   │   ├── DadosDetalhamentoTopico.java
+│               |   │   │   ├── DadosListagemTopico.java
+│               |   │   │   ├── StatusTopico.java
+│               |   │   │   ├── Topico.java
+│               |   │   │   └── TopicoRepository.java
+│               |   │   └── usuario/
+│               |   │       ├── DadosAutenticacao.java
+│               |   │       ├── Usuario.java
+│               |   │       ├── UsuarioRepository.java
+│               |   │       └── AltenticacaoService.java
+│               |   └── infra
+|               |          ├── security/
+│               |          |   ├── SecurityFilter
+|               |          |   ├── SecurityConfiguration.java
+│               |          |   ├── TokenService.java
+│               |          |   └── DadosTokenJWT
+|               |          └── springdoc
+|               |              └── SpingDocConfigurations   
+|               └──ForumApplication
+└── resources/
+├── application.properties
+└── db/
+└── migration/
+└── V1__create-table-usuarios.sql
+    V2__adicionar_coluna_permissao.sql
+    V3__create_table_cursos.sql
+    V4__create_table_respostas.sql
+    V5__create-table-topicos.sql
+    V6__remove_column_permissao.sql
+    V7__create-table-role.sql
+
+```
 
 ## Documentação da API
 A documentação da API é gerada automaticamente pelo Springdoc OpenAPI e pode ser acessada em:
