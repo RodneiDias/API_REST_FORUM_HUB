@@ -1,6 +1,7 @@
 package br.com.alura.forum.domain.topico;
 
 import br.com.alura.forum.domain.resposta.Resposta;
+
 import br.com.alura.forum.domain.usuario.Usuario;
 import br.com.alura.forum.domain.curso.Curso;
 import jakarta.persistence.*;

@@ -38,13 +38,12 @@ public class SecurityFilter extends OncePerRequestFilter {
                 var usuario = usuarioOptional.get();
                 var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                System.out.println("Usuário autenticado: " + usuario.getUsername()); // Log do usuário autenticado
+                System.out.println("Usuário autenticado: " + usuario.getUsername());
             } else {
-                System.out.println("Usuário não encontrado"); // Log caso o usuário não seja encontrado
+                System.out.println("Usuário não encontrado");
             }
-
         } else {
-            System.out.println("Token não fornecido"); // Log caso o token não seja fornecido
+            System.out.println("Token não fornecido");
         }
 
         filterChain.doFilter(request, response);

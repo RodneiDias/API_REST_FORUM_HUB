@@ -8,10 +8,6 @@ import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.security.SecurityScheme;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SpingDocConfigurations {
@@ -24,7 +20,7 @@ public class SpingDocConfigurations {
                                 new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")))
                 .info(new Info().title("API-REST Forum Hub")
                         .version("v1")
-                        .description("A Forum Hub API é uma aplicação de fórum construída com Spring Boot. Ela permite que os usuários façam autenticação, criem cursos, postem tópicos respostas referentes a cada curso e visualizem cusos, tópicos e respostas. A aplicação usa Spring Security para autenticação e autorização, Hibernate para mapeamento objeto-relacional, Flyway para migrações de banco de dados e Springdoc OpenAPI para documentação da API.")
+                        .description("O projeto é uma API REST para gerenciamento de um fórum de discussões, construída com JAVA e Spring Boot. Ela permite que os usuários façam autenticação, criem cursos, postem tópicos respostas referentes a cada curso e visualizem cusos, tópicos e respostas. A aplicação usa Spring Security para autenticação e autorização, Hibernate para mapeamento objeto-relacional, Flyway para migrações de banco de dados e Springdoc OpenAPI para documentação da API.")
                         .contact(new Contact()
                                 .name("Rodnei Ferreira")
                                 .email("rodnei.dias04@gmail.com")

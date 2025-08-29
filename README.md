@@ -107,6 +107,13 @@ Certifique-se de que o MySQL esteja instalado e rodando. Crie um banco de dados 
 CREATE DATABASE forum_hub_api;
 
 ## Endpoints da API
+### UsuarioController
+- POST /usuarios: Cadastrar um novo curso.
+- GET /usuarios: Listar todos os cursos.
+- GET /usuarios/{idUsuario}: Detalhar um usuario específico.
+- PUT /usuarios/{idUsuario}: Atualizar um usuario específico.
+- DELETE /usuario/{idUsuario}: Excluir um usuario específico.
+
 ### CursoController
 - POST /cursos: Cadastrar um novo curso.
 - GET /cursos: Listar todos os cursos.

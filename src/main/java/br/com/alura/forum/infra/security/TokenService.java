@@ -1,20 +1,21 @@
 package br.com.alura.forum.infra.security;
 
-
 import br.com.alura.forum.domain.usuario.Usuario;
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 @Service
 public class TokenService {
-    private static final String ISSUER = "API Voll.med";
+    private static final String ISSUER = "API Forum.hub";
 
     @Value("${api.security.token.secret}")
     private String secret;
@@ -27,24 +28,27 @@ public class TokenService {
                     .withSubject(usuario.getEmail())
                     .withExpiresAt(dataExpiracao())
                     .sign(algoritmo);
-        } catch (JWTCreationException exception){
-            throw new RuntimeException("erro ao gerar token jwt", exception);
+        } catch (JWTCreationException exception) {
+            throw new RuntimeException("Erro ao gerar token JWT", exception);
         }
     }
+
     public String getSubject(String tokenJWT) {
         try {
             var algoritmo = Algorithm.HMAC256(secret);
-            return JWT.require(algoritmo)
+            JWTVerifier verifier = JWT.require(algoritmo)
                     .withIssuer(ISSUER)
-                    .build()
-                    .verify(tokenJWT)
-                    .getSubject();
+                    .build();
+            String subject = verifier.verify(tokenJWT).getSubject();
+            System.out.println("Token validado com sucesso. Subject: " + subject);
+            return subject;
         } catch (JWTVerificationException exception) {
-            throw new RuntimeException("Token JWT inválido ou expirado!");
+            System.err.println("Erro ao verificar o token JWT: " + exception.getMessage());
+            throw new RuntimeException("Token JWT inválido ou expirado!", exception);
         }
     }
+
     private Instant dataExpiracao() {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
-
 }

@@ -33,7 +33,8 @@ public class TratadorDeErros {
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity tratarErroBadCredentials() {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body("Credenciais inválidas");
     }
 
     @ExceptionHandler(AuthenticationException.class)

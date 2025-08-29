@@ -3,9 +3,11 @@ package br.com.alura.forum.domain.usuario;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 @Table(name = "usuarios")
 @Entity(name = "Usuario")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -35,12 +38,34 @@ public class Usuario implements UserDetails {
     @Column(name = "role")
     @JsonIgnore
     private Set<String> roles = new HashSet<>();
+
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toSet());
+    }
+    public void atualizarInformacoes(DadosAtualizarUsuario dados, PasswordEncoder passwordEncoder) {
+        if (dados.nome() != null) {
+            this.nome = dados.nome();
+        }
+        if (dados.email() != null) {
+            this.email = dados.email();
+        }
+        if (dados.senha() != null && !dados.senha().isBlank()) {
+            String senhaCriptografada = passwordEncoder.encode(dados.senha());
+            setSenha(senhaCriptografada);
+            System.out.println("Senha atualizada.");
+        }
+        if (dados.role() != null && !dados.role().isBlank()) {
+            setRoles(Set.of(dados.role()));
+            System.out.println("Role atualizada: " + dados.role());
+        } else {
+            setRoles(Set.of("ROLE_USER"));
+            System.out.println("Role padrão atribuída: ROLE_USER");
+        }
+
     }
     @JsonIgnore
     @Override
@@ -72,4 +97,5 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
